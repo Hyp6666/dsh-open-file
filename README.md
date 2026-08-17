@@ -46,10 +46,10 @@ Install the latest npm release:
 dsh plugin --profile web add dsh-open-file
 ```
 
-Install version `0.1.0`:
+Install version `0.1.1`:
 
 ```bash
-dsh plugin --profile web add dsh-open-file@0.1.0
+dsh plugin --profile web add dsh-open-file@0.1.1
 ```
 
 Install a locally reviewed package:
@@ -57,7 +57,7 @@ Install a locally reviewed package:
 ```bash
 npm ci
 npm pack
-dsh plugin --profile web add ./dsh-open-file-0.1.0.tgz
+dsh plugin --profile web add ./dsh-open-file-0.1.1.tgz
 ```
 
 The package activates the Host service, Web client, and Open File Skill through `cordis.patch.yml`. npm presents this `README.md` as the package documentation.
@@ -90,7 +90,7 @@ Image files integrate with the DSH image workflow. Documents and regular files u
 
 ## Configuration
 
-Version `0.1.0` uses packaged release defaults. `cordis.patch.yml` registers the Host service, Web client, and Skill. Resource limits are listed below and represented in the public contract.
+Version `0.1.1` uses packaged release defaults. `cordis.patch.yml` registers the Host service, Web client, and Skill. Resource limits are listed below and represented in the public contract.
 
 ## Permissions, storage, and protocol
 
@@ -127,7 +127,7 @@ Tool responses include the source hash, parser, locator, cursor, and canonical r
 | OCR timeout | 120 seconds |
 | Rendered pixels | 40,000,000 |
 
-These values define the `0.1.0` resource envelope.
+These values define the `0.1.1` resource envelope.
 
 ## Security
 
@@ -158,7 +158,7 @@ dsh plugin --profile web remove dsh-open-file
 Install a selected release to complete a version change:
 
 ```bash
-dsh plugin --profile web add dsh-open-file@0.1.0
+dsh plugin --profile web add dsh-open-file@0.1.1
 ```
 
 ## Development

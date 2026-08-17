@@ -3,8 +3,9 @@ import { mkdtemp, readdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Readable } from "node:stream";
+import { setTimeout as delay } from "node:timers/promises";
 
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_LIMITS } from "../src/contracts.js";
 import { parseAttachmentRef } from "../src/references.js";
@@ -180,7 +181,14 @@ describe("streaming upload state machine", () => {
   });
 
   it("times out a stalled upload stream and removes partial bytes", async () => {
-    const uploads = service({ uploadTimeoutMs: 10 });
+    const createIncoming = WorkspaceRepository.prototype.createIncoming;
+    vi.spyOn(WorkspaceRepository.prototype, "createIncoming").mockImplementationOnce(
+      async function (this: WorkspaceRepository, uploadId: string) {
+        await delay(25);
+        return createIncoming.call(this, uploadId);
+      }
+    );
+    const uploads = service({ uploadTimeoutMs: 1 });
     const prepared = await uploads.prepare({ sessionId: "session-a", name: "x", size: 4 });
     const stalled = new Readable({ read: () => undefined });
     await expect(

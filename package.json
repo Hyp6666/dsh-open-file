@@ -1,6 +1,6 @@
 {
   "name": "dsh-open-file",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Workspace-bound arbitrary file upload, reading, OCR, and rendering for DeepSeek Harness.",
   "type": "module",
   "license": "MIT",

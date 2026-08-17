@@ -46,10 +46,10 @@ Web 集成使用 rc.6 的输入触发器注册、会话渲染器、原生图片�
 dsh plugin --profile web add dsh-open-file
 ```
 
-安装 `0.1.0`：
+安装 `0.1.1`：
 
 ```bash
-dsh plugin --profile web add dsh-open-file@0.1.0
+dsh plugin --profile web add dsh-open-file@0.1.1
 ```
 
 安装本地审核包：
@@ -57,7 +57,7 @@ dsh plugin --profile web add dsh-open-file@0.1.0
 ```bash
 npm ci
 npm pack
-dsh plugin --profile web add ./dsh-open-file-0.1.0.tgz
+dsh plugin --profile web add ./dsh-open-file-0.1.1.tgz
 ```
 
 安装包通过 `cordis.patch.yml` 激活 Host 服务、Web 客户端与 Open File Skill。npm 使用英文 `README.md` 展示包文档。
@@ -90,7 +90,7 @@ dsh plugin --profile web add ./dsh-open-file-0.1.0.tgz
 
 ## 配置
 
-`0.1.0` 使用随包发布默认值。`cordis.patch.yml` 注册 Host 服务、Web 客户端与 Skill。资源边界列于下表，并纳入公开契约。
+`0.1.1` 使用随包发布默认值。`cordis.patch.yml` 注册 Host 服务、Web 客户端与 Skill。资源边界列于下表，并纳入公开契约。
 
 ## 权限、数据位置与上传协议
 
@@ -127,7 +127,7 @@ DELETE /dsh-open-file/v1/uploads/<upload-id>
 | OCR 超时 | 120 秒 |
 | 渲染像素 | 40,000,000 |
 
-这些数值构成 `0.1.0` 的资源边界。
+这些数值构成 `0.1.1` 的资源边界。
 
 ## 安全说明
 
@@ -158,7 +158,7 @@ dsh plugin --profile web remove dsh-open-file
 安装指定版本可完成版本切换：
 
 ```bash
-dsh plugin --profile web add dsh-open-file@0.1.0
+dsh plugin --profile web add dsh-open-file@0.1.1
 ```
 
 ## 开发与验证

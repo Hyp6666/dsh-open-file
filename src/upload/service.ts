@@ -139,19 +139,21 @@ export class UploadService {
     let handle: Awaited<ReturnType<WorkspaceRepository["createIncoming"]>> | undefined;
     let received = 0;
     let timedOut = false;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     const hash = createHash("sha256");
     const abort = (): void => {
       input.bytes.destroy(new Error("upload aborted"));
     };
-    input.signal?.addEventListener("abort", abort, { once: true });
-    const timeout = setTimeout(() => {
-      timedOut = true;
-      input.bytes.destroy(new Error("upload timed out"));
-    }, this.limits.uploadTimeoutMs);
-    timeout.unref();
     try {
       if (input.signal?.aborted) throw new OpenFileError("FILE_ABORTED", "The upload was aborted.");
       handle = await repository.createIncoming(record.uploadId);
+      if (input.signal?.aborted) throw new OpenFileError("FILE_ABORTED", "The upload was aborted.");
+      input.signal?.addEventListener("abort", abort, { once: true });
+      timeout = setTimeout(() => {
+        timedOut = true;
+        input.bytes.destroy(new Error("upload timed out"));
+      }, this.limits.uploadTimeoutMs);
+      timeout.unref();
       for await (const value of input.bytes) {
         if (input.signal?.aborted) throw new OpenFileError("FILE_ABORTED", "The upload was aborted.");
         const chunk = Buffer.isBuffer(value) ? value : Buffer.from(value as Uint8Array);
@@ -190,7 +192,7 @@ export class UploadService {
         cause: error
       });
     } finally {
-      clearTimeout(timeout);
+      if (timeout !== undefined) clearTimeout(timeout);
       input.signal?.removeEventListener("abort", abort);
       this.activeWrites.delete(lock);
     }
