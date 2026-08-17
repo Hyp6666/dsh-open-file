@@ -1,0 +1,145 @@
+{
+  "name": "dsh-open-file",
+  "version": "0.1.0",
+  "description": "Workspace-bound arbitrary file upload, reading, OCR, and rendering for DeepSeek Harness.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "main": "./lib/index.js",
+  "types": "./lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./skill": {
+      "types": "./lib/types/skill.d.ts",
+      "default": "./lib/skill.js"
+    },
+    "./cordis.patch.yml": {
+      "default": "./cordis.patch.yml"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh-CN.md",
+    "assets/dsh-open-file-drop.png",
+    "assets/dsh-open-file-formats.png",
+    "LICENSE",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/build-client.mjs && node scripts/copy-tessdata.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "verify:pack": "node scripts/verify-pack.mjs",
+    "verify:release": "npm run typecheck && npm run lint && npm test && npm run build && npm run verify:pack",
+    "prepack": "npm run verify:release",
+    "prepublishOnly": "node scripts/verify-publish.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hyp6666/dsh-open-file.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Hyp6666/dsh-open-file/issues"
+  },
+  "homepage": "https://github.com/Hyp6666/dsh-open-file#readme",
+  "packageManager": "npm@11.9.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "file-upload",
+    "ocr"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-input-trigger"
+      ]
+    }
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "1.0.6",
+    "chardet": "2.2.0",
+    "fast-xml-parser": "5.11.0",
+    "iconv-lite": "0.7.3",
+    "papaparse": "5.6.0",
+    "pdfjs-dist": "6.2.108",
+    "tesseract.js": "7.0.0",
+    "yaml": "2.9.0",
+    "yauzl": "3.4.0"
+  },
+  "dependenciesMeta": {
+    "tesseract.js": {
+      "built": false
+    }
+  },
+  "bundledDependencies": [
+    "tesseract.js"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-agent": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-locale": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-conversation": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-input-trigger": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-slots": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-host-webserver": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-session": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-skill": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.33.0",
+    "@tesseract.js-data/chi_sim": "1.0.0",
+    "@tesseract.js-data/eng": "1.0.0",
+    "@testing-library/react": "16.3.0",
+    "@types/node": "24.3.0",
+    "@types/papaparse": "5.3.16",
+    "@types/react": "18.3.23",
+    "@types/react-dom": "18.3.7",
+    "@types/yauzl": "2.10.3",
+    "@types/yazl": "3.3.1",
+    "@vitest/coverage-v8": "3.2.7",
+    "eslint": "9.33.0",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "esbuild": "0.28.2",
+    "globals": "16.3.0",
+    "jsdom": "26.1.0",
+    "pdf-lib": "1.17.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "typescript": "5.9.2",
+    "typescript-eslint": "8.39.1",
+    "vitest": "3.2.7",
+    "yazl": "3.3.1"
+  }
+}

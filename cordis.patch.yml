@@ -1,0 +1,7 @@
+- insert:
+    - id: open-file
+      name: 'dsh-open-file'
+      config: {}
+    - id: open-file-skill
+      name: 'dsh-open-file/skill'
+      config: {}
