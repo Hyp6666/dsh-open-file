@@ -3,11 +3,21 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const npm = process.platform === "win32" ? "npm.cmd" : "npm";
+import { npmInvocation } from "./npm-invocation.mjs";
+
+const npmArgs = ["pack", "--dry-run", "--json", "--ignore-scripts"];
+const npm = npmInvocation(
+  {
+    npmExecPath: process.env.npm_execpath,
+    nodeExecPath: process.execPath,
+    platform: process.platform
+  },
+  npmArgs
+);
 const cache = mkdtempSync(join(tmpdir(), "dsh-open-file-npm-cache-"));
 const result = spawnSync(
-  npm,
-  ["pack", "--dry-run", "--json", "--ignore-scripts"],
+  npm.command,
+  npm.args,
   {
     cwd: new URL("..", import.meta.url),
     env: { ...process.env, npm_config_cache: cache },
