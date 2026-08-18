@@ -18,7 +18,7 @@
 ## 功能
 
 - 在现有 `+` 菜单中加入 **添加 → 附件** 操作。
-- 通过系统选择器与全页面拖放接收多个文件。
+- 通过系统选择器、全页面拖放与剪贴板粘贴接收多个文件。
 - 使用紧凑草稿卡片展示格式图标、上传进度、取消、重试与移除控件。
 - 把已发送附件卡片放在对应用户消息下方，保持会话布局整齐。
 - 通过同源二进制流把文件写入当前会话工作区。
@@ -34,7 +34,7 @@
 | DeepSeek Harness | `0.1.0-rc.6` |
 | Node.js | `>=22.13.0` |
 | 操作系统 | Windows、Linux、macOS |
-| 浏览器 API | `fetch`、`XMLHttpRequest`、`File`、拖放 |
+| 浏览器 API | `fetch`、`XMLHttpRequest`、`File`、拖放、剪贴板文件粘贴 |
 
 Web 集成使用 rc.6 的输入触发器注册、会话渲染器、原生图片流程与客户端运行时 API。主机契约需要关注时，兼容性检查会返回 `FILE_WEB_COMPATIBILITY`。
 
@@ -46,10 +46,10 @@ Web 集成使用 rc.6 的输入触发器注册、会话渲染器、原生图片�
 dsh plugin --profile web add dsh-open-file
 ```
 
-安装 `0.1.1`：
+安装 `0.1.2`：
 
 ```bash
-dsh plugin --profile web add dsh-open-file@0.1.1
+dsh plugin --profile web add dsh-open-file@0.1.2
 ```
 
 安装本地审核包：
@@ -57,7 +57,7 @@ dsh plugin --profile web add dsh-open-file@0.1.1
 ```bash
 npm ci
 npm pack
-dsh plugin --profile web add ./dsh-open-file-0.1.1.tgz
+dsh plugin --profile web add ./dsh-open-file-0.1.2.tgz
 ```
 
 安装包通过 `cordis.patch.yml` 激活 Host 服务、Web 客户端与 Open File Skill。npm 使用英文 `README.md` 展示包文档。
@@ -65,7 +65,7 @@ dsh plugin --profile web add ./dsh-open-file-0.1.1.tgz
 ## 快速使用
 
 1. 打开带有活动工作区的 DeepSeek Harness 会话。
-2. 选择 `+` → **添加** → **附件**，也可把一个或多个文件拖入 Web 应用。
+2. 选择 `+` → **添加** → **附件**，也可把文件拖入 Web 应用，或从剪贴板直接粘贴文件。
 3. 查看草稿卡片并等待就绪状态。
 4. 发送消息，生成会话绑定的 `dsh-open-file://attachment/v1/...` 引用。
 5. Assistant 可根据任务选择检查、读取、OCR、渲染或直接作答。
@@ -90,7 +90,7 @@ dsh plugin --profile web add ./dsh-open-file-0.1.1.tgz
 
 ## 配置
 
-`0.1.1` 使用随包发布默认值。`cordis.patch.yml` 注册 Host 服务、Web 客户端与 Skill。资源边界列于下表，并纳入公开契约。
+`0.1.2` 使用随包发布默认值。`cordis.patch.yml` 注册 Host 服务、Web 客户端与 Skill。资源边界列于下表，并纳入公开契约。
 
 ## 权限、数据位置与上传协议
 
@@ -127,7 +127,7 @@ DELETE /dsh-open-file/v1/uploads/<upload-id>
 | OCR 超时 | 120 秒 |
 | 渲染像素 | 40,000,000 |
 
-这些数值构成 `0.1.1` 的资源边界。
+这些数值构成 `0.1.2` 的资源边界。
 
 ## 安全说明
 
@@ -158,7 +158,7 @@ dsh plugin --profile web remove dsh-open-file
 安装指定版本可完成版本切换：
 
 ```bash
-dsh plugin --profile web add dsh-open-file@0.1.1
+dsh plugin --profile web add dsh-open-file@0.1.2
 ```
 
 ## 开发与验证

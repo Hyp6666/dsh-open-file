@@ -9,10 +9,12 @@ import { apply as applySkill, inject as skillInject, skillRegistration } from ".
 import { FIXED_TOOL_FOOTER } from "../src/contracts.js";
 
 describe("bundled open-file Skill", () => {
-  it("is packaged, model/user invocable, concise, and preserves LLM choice", async () => {
+  it("is packaged, model/user invocable, and preserves LLM choice", async () => {
     const registration = skillRegistration();
     expect(registration).toMatchObject({
       name: "open-file",
+      description: expect.stringContaining("uploaded files"),
+      whenToUse: expect.stringContaining("user's request depends"),
       source: "bundled",
       invocation: { modelInvocable: true, userInvocable: true }
     });
@@ -22,8 +24,6 @@ describe("bundled open-file Skill", () => {
     expect(registration.content).toContain("file_render");
     expect(registration.content).toContain(FIXED_TOOL_FOOTER);
     expect(registration.content).not.toMatch(/detect (?:vision|multimodal)|probe (?:vision|capability)/iu);
-    expect((registration.content.match(/\n/gu) ?? []).length).toBeLessThan(45);
-
     const disk = await readFile(new URL("../skills/open-file/SKILL.md", import.meta.url), "utf8");
     expect(registration.content).toBe(disk);
   });

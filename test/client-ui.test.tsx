@@ -1,13 +1,15 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { AttachmentUploadApi } from "../src/client/api.js";
 import { FileIntakeCoordinator } from "../src/client/file-intake.js";
 import { FilePickerController } from "../src/client/picker.js";
 import { AttachmentQueue } from "../src/client/queue.js";
 import { AttachmentDock, ensureOpenFileStyles } from "../src/client/ui.js";
+
+afterEach(cleanup);
 
 function file(name: string, value = "data"): File {
   return new File([value], name, { type: "application/octet-stream" });
@@ -105,6 +107,60 @@ describe("attachment picker and dock", () => {
     await waitFor(() => expect(screen.queryByText("dropped.txt")).not.toBeNull());
     expect(accept).toHaveBeenCalledOnce();
     expect(queue.getSnapshot("session-a")).toHaveLength(1);
+  });
+
+  it("captures pasted files before the native image-only handler and uses the attachment queue", async () => {
+    const queue = new AttachmentQueue(api());
+    const intake = new FileIntakeCoordinator(queue);
+    const accept = vi.spyOn(intake, "accept");
+    render(
+      <AttachmentDock
+        queue={queue}
+        sessionId="session-a"
+        locale="en-US"
+        onFiles={(files) => intake.accept("session-a", files)}
+      />,
+    );
+    const nativeImageOnlyHandler = vi.fn();
+    document.addEventListener("paste", nativeImageOnlyHandler);
+    const pasted = file("pasted.pdf");
+    const event = new Event("paste", { bubbles: true, cancelable: true });
+    Object.defineProperty(event, "clipboardData", {
+      value: {
+        types: ["Files"],
+        files: [],
+        items: [{ kind: "file", getAsFile: () => pasted }],
+      },
+    });
+
+    document.dispatchEvent(event);
+    document.removeEventListener("paste", nativeImageOnlyHandler);
+
+    expect(event.defaultPrevented).toBe(true);
+    expect(nativeImageOnlyHandler).not.toHaveBeenCalled();
+    expect(accept).toHaveBeenCalledOnce();
+    await waitFor(() => expect(queue.getSnapshot("session-a")).toHaveLength(1));
+  });
+
+  it("leaves text-only paste events untouched", () => {
+    const onFiles = vi.fn();
+    render(
+      <AttachmentDock
+        queue={new AttachmentQueue(api())}
+        sessionId="session-a"
+        locale="en-US"
+        onFiles={onFiles}
+      />,
+    );
+    const event = new Event("paste", { bubbles: true, cancelable: true });
+    Object.defineProperty(event, "clipboardData", {
+      value: { types: ["text/plain"], files: [] },
+    });
+
+    document.dispatchEvent(event);
+
+    expect(event.defaultPrevented).toBe(false);
+    expect(onFiles).not.toHaveBeenCalled();
   });
 
   it("shows progress state and accessible cancel, retry, and remove controls", async () => {

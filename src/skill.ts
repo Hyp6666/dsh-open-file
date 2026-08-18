@@ -12,8 +12,8 @@ export const inject = ["skills"] as const;
 export function skillRegistration(): SkillRegistration {
   return Object.freeze({
     name: "open-file",
-    description: "Inspect, read, OCR, or render workspace-local uploaded files through four independent tools.",
-    whenToUse: "Use when a user attaches an ordinary file or provides a dsh-open-file reference.",
+    description: "Analyze uploaded files with structure inspection, native-part reading, local OCR, and render generation.",
+    whenToUse: "Use when a user's request depends on the contents, structure, metadata, or visible text of a file uploaded through dsh-open-file, or when the conversation contains a dsh-open-file reference.",
     source: "bundled",
     invocation: Object.freeze({ modelInvocable: true, userInvocable: true }),
     resourceBase: Object.freeze({ kind: "directory", path: dirname(fileURLToPath(SKILL_URL)) }),

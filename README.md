@@ -18,7 +18,7 @@ Workspace-scoped file attachments, document reading, local OCR, and page renderi
 ## Features
 
 - Adds an **Add → Attachment** action to the existing `+` menu.
-- Accepts multiple files through the system picker and page-wide drag and drop.
+- Accepts multiple files through the system picker, page-wide drag and drop, and clipboard paste.
 - Presents compact draft cards with format icons, upload progress, cancellation, retry, and removal controls.
 - Places sent attachment cards directly below their user message and keeps the conversation aligned.
 - Streams same-origin binary uploads into the active session workspace.
@@ -34,7 +34,7 @@ Workspace-scoped file attachments, document reading, local OCR, and page renderi
 | DeepSeek Harness | `0.1.0-rc.6` |
 | Node.js | `>=22.13.0` |
 | Operating systems | Windows, Linux, macOS |
-| Browser APIs | `fetch`, `XMLHttpRequest`, `File`, drag and drop |
+| Browser APIs | `fetch`, `XMLHttpRequest`, `File`, drag and drop, clipboard file paste |
 
 The Web integration uses the rc.6 input-trigger registration, conversation renderer, native image workflow, and client runtime APIs. Compatibility checks report `FILE_WEB_COMPATIBILITY` when the host contract requires attention.
 
@@ -46,10 +46,10 @@ Install the latest npm release:
 dsh plugin --profile web add dsh-open-file
 ```
 
-Install version `0.1.1`:
+Install version `0.1.2`:
 
 ```bash
-dsh plugin --profile web add dsh-open-file@0.1.1
+dsh plugin --profile web add dsh-open-file@0.1.2
 ```
 
 Install a locally reviewed package:
@@ -57,7 +57,7 @@ Install a locally reviewed package:
 ```bash
 npm ci
 npm pack
-dsh plugin --profile web add ./dsh-open-file-0.1.1.tgz
+dsh plugin --profile web add ./dsh-open-file-0.1.2.tgz
 ```
 
 The package activates the Host service, Web client, and Open File Skill through `cordis.patch.yml`. npm presents this `README.md` as the package documentation.
@@ -65,7 +65,7 @@ The package activates the Host service, Web client, and Open File Skill through 
 ## Quick start
 
 1. Open a DeepSeek Harness session with an active workspace.
-2. Select `+` → **Add** → **Attachment**, or drop one or more files onto the Web app.
+2. Select `+` → **Add** → **Attachment**, drop files onto the Web app, or paste files from the clipboard.
 3. Review the draft cards and wait for the ready state.
 4. Send the message to create session-bound `dsh-open-file://attachment/v1/...` references.
 5. Let the Assistant inspect, read, OCR, or render the selected content.
@@ -90,7 +90,7 @@ Image files integrate with the DSH image workflow. Documents and regular files u
 
 ## Configuration
 
-Version `0.1.1` uses packaged release defaults. `cordis.patch.yml` registers the Host service, Web client, and Skill. Resource limits are listed below and represented in the public contract.
+Version `0.1.2` uses packaged release defaults. `cordis.patch.yml` registers the Host service, Web client, and Skill. Resource limits are listed below and represented in the public contract.
 
 ## Permissions, storage, and protocol
 
@@ -127,7 +127,7 @@ Tool responses include the source hash, parser, locator, cursor, and canonical r
 | OCR timeout | 120 seconds |
 | Rendered pixels | 40,000,000 |
 
-These values define the `0.1.1` resource envelope.
+These values define the `0.1.2` resource envelope.
 
 ## Security
 
@@ -158,7 +158,7 @@ dsh plugin --profile web remove dsh-open-file
 Install a selected release to complete a version change:
 
 ```bash
-dsh plugin --profile web add dsh-open-file@0.1.1
+dsh plugin --profile web add dsh-open-file@0.1.2
 ```
 
 ## Development

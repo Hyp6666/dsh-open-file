@@ -110,6 +110,17 @@ function hasFiles(event: DragEvent): boolean {
   return event.dataTransfer?.types.includes("Files") === true;
 }
 
+function clipboardFiles(event: ClipboardEvent): readonly File[] {
+  const data = event.clipboardData;
+  if (data === null) return [];
+  const files = Array.from(data.files);
+  if (files.length > 0) return files;
+  return Array.from(data.items ?? [])
+    .filter((item) => item.kind === "file")
+    .map((item) => item.getAsFile())
+    .filter((file): file is File => file !== null);
+}
+
 export function AttachmentDock({ queue, sessionId, locale, onFiles }: AttachmentDockProps): ReactElement | null {
   ensureOpenFileStyles();
   const copy = locale.toLocaleLowerCase().startsWith("zh") ? ZH : EN;
@@ -150,15 +161,24 @@ export function AttachmentDock({ queue, sessionId, locale, onFiles }: Attachment
       setDragging(false);
       if (event.dataTransfer !== null) onFiles(event.dataTransfer.files);
     };
+    const paste = (event: ClipboardEvent): void => {
+      const files = clipboardFiles(event);
+      if (files.length === 0) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      onFiles(files);
+    };
     document.addEventListener("dragenter", enter, { capture: true });
     document.addEventListener("dragover", over, { capture: true });
     document.addEventListener("dragleave", leave, { capture: true });
     document.addEventListener("drop", drop, { capture: true });
+    document.addEventListener("paste", paste, { capture: true });
     return () => {
       document.removeEventListener("dragenter", enter, { capture: true });
       document.removeEventListener("dragover", over, { capture: true });
       document.removeEventListener("dragleave", leave, { capture: true });
       document.removeEventListener("drop", drop, { capture: true });
+      document.removeEventListener("paste", paste, { capture: true });
     };
   }, [onFiles]);
 

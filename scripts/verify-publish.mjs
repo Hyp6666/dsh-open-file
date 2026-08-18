@@ -6,7 +6,7 @@ const manifest = JSON.parse(
 
 const expected = Object.freeze({
   name: "dsh-open-file",
-  version: "0.1.1",
+  version: "0.1.2",
   license: "MIT",
   repository: "git+https://github.com/Hyp6666/dsh-open-file.git"
 });
