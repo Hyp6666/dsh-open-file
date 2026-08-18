@@ -8,7 +8,7 @@ const expected = Object.freeze({
   name: "dsh-open-file",
   version: "0.1.2",
   license: "MIT",
-  repository: "git+https://github.com/Hyp6666/dsh-open-file.git"
+  repository: "git+https://github.com/hyper-dsh-plugins/dsh-open-file.git"
 });
 
 if (

@@ -52,12 +52,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hyp6666/dsh-open-file.git"
+    "url": "git+https://github.com/hyper-dsh-plugins/dsh-open-file.git"
   },
   "bugs": {
-    "url": "https://github.com/Hyp6666/dsh-open-file/issues"
+    "url": "https://github.com/hyper-dsh-plugins/dsh-open-file/issues"
   },
-  "homepage": "https://github.com/Hyp6666/dsh-open-file#readme",
+  "homepage": "https://github.com/hyper-dsh-plugins/dsh-open-file#readme",
   "packageManager": "npm@11.9.0",
   "publishConfig": {
     "access": "public"

@@ -39,10 +39,10 @@ describe("publishable package contract", () => {
     expect(packageJson.keywords).toContain("dsh-plugin");
     expect(packageJson.repository).toEqual({
       type: "git",
-      url: "git+https://github.com/Hyp6666/dsh-open-file.git"
+      url: "git+https://github.com/hyper-dsh-plugins/dsh-open-file.git"
     });
-    expect(packageJson.bugs?.url).toBe("https://github.com/Hyp6666/dsh-open-file/issues");
-    expect(packageJson.homepage).toBe("https://github.com/Hyp6666/dsh-open-file#readme");
+    expect(packageJson.bugs?.url).toBe("https://github.com/hyper-dsh-plugins/dsh-open-file/issues");
+    expect(packageJson.homepage).toBe("https://github.com/hyper-dsh-plugins/dsh-open-file#readme");
     expect(packageJson.publishConfig?.access).toBe("public");
     expect(packageJson.packageManager).toBe("npm@11.9.0");
     expect(packageJson.dsh.client.platform).toBe("web");
@@ -98,7 +98,7 @@ describe("publishable package contract", () => {
   it("blocks publication when the reviewed package identity changes", async () => {
     const guard = await readFile(join(root, "scripts", "verify-publish.mjs"), "utf8");
     expect(guard).toContain("dsh-open-file");
-    expect(guard).toContain("git+https://github.com/Hyp6666/dsh-open-file.git");
+    expect(guard).toContain("git+https://github.com/hyper-dsh-plugins/dsh-open-file.git");
     expect(guard).toContain("npm publish is blocked");
   });
 

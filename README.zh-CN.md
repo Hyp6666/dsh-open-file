@@ -7,7 +7,7 @@
 `dsh-open-file` 支持把任何格式的文件带入 DeepSeek Harness 会话。随附的 Agent 工具可检查上传内容，并根据任务读取、OCR 或渲染其中可用的信息，形成一套可追溯工作流。
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Hyp6666/dsh-open-file/main/assets/dsh-open-file-drop.png" width="960" alt="在 DeepSeek Harness Web 中拖放文件">
+  <img src="https://raw.githubusercontent.com/hyper-dsh-plugins/dsh-open-file/main/assets/dsh-open-file-drop.png" width="960" alt="在 DeepSeek Harness Web 中拖放文件">
 </p>
 
 <p align="center">
@@ -71,7 +71,7 @@ dsh plugin --profile web add ./dsh-open-file-0.1.2.tgz
 5. Assistant 可根据任务选择检查、读取、OCR、渲染或直接作答。
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Hyp6666/dsh-open-file/main/assets/dsh-open-file-formats.png" width="960" alt="DeepSeek Harness 输入区中等待发送的多种格式文件">
+  <img src="https://raw.githubusercontent.com/hyper-dsh-plugins/dsh-open-file/main/assets/dsh-open-file-formats.png" width="960" alt="DeepSeek Harness 输入区中等待发送的多种格式文件">
 </p>
 
 <p align="center">

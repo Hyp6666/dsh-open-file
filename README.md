@@ -7,7 +7,7 @@ Workspace-scoped file attachments, document reading, local OCR, and page renderi
 `dsh-open-file` brings files of any format into DeepSeek Harness conversations. Its included agent tools inspect each upload and read, OCR, or render the content available for the task through one traceable workflow.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Hyp6666/dsh-open-file/main/assets/dsh-open-file-drop.png" width="960" alt="Drop files anywhere in DeepSeek Harness Web">
+  <img src="https://raw.githubusercontent.com/hyper-dsh-plugins/dsh-open-file/main/assets/dsh-open-file-drop.png" width="960" alt="Drop files anywhere in DeepSeek Harness Web">
 </p>
 
 <p align="center">
@@ -71,7 +71,7 @@ The package activates the Host service, Web client, and Open File Skill through 
 5. Let the Assistant inspect, read, OCR, or render the selected content.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Hyp6666/dsh-open-file/main/assets/dsh-open-file-formats.png" width="960" alt="Files in multiple formats ready in the DeepSeek Harness composer">
+  <img src="https://raw.githubusercontent.com/hyper-dsh-plugins/dsh-open-file/main/assets/dsh-open-file-formats.png" width="960" alt="Files in multiple formats ready in the DeepSeek Harness composer">
 </p>
 
 <p align="center">
